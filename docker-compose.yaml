@@ -3,6 +3,7 @@ version: '2.1'
 services:
   product:
     image: ms-demo-05-reactive-product-service:latest
+    platform: linux/amd64
     ports:
       - "8081:8080"
     environment:
@@ -13,6 +14,7 @@ services:
 
   recommendation:
     image: ms-demo-05-reactive-recommendation-service:latest
+    platform: linux/amd64
     ports:
       - "8082:8080"
     environment:
@@ -23,6 +25,7 @@ services:
 
   review:
     image: ms-demo-05-reactive-review-service:latest
+    platform: linux/amd64
     ports:
       - "8083:8080"
     environment:
@@ -33,6 +36,7 @@ services:
 
   product-composite:
     image: ms-demo-05-reactive-product-composite-service:latest
+    platform: linux/amd64
     ports:
       - "8080:8080"
     environment:
@@ -42,11 +46,13 @@ services:
 
   workstation:
     image: openjdk:latest
+    platform: linux/amd64
     tty: true
 
   # $ mongo
   mongodb_product:
-    image: mongo:3.6.9
+    #image: mongo:3.6.9
+    image: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongo
       MONGO_INITDB_ROOT_PASSWORD: mongo
@@ -54,13 +60,14 @@ services:
       TZ: Asia/Tokyo
     ports:
       - "27017:27017"
-    command: mongod --smallfiles
+    #command: mongod --smallfiles
     volumes:
       - ./initdb-mongo-product.d:/docker-entrypoint-initdb.d
 
   # $ mongo
   mongodb_recommendation:
-    image: mongo:3.6.9
+    #image: mongo:3.6.9
+    image: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongo
       MONGO_INITDB_ROOT_PASSWORD: mongo
@@ -68,13 +75,14 @@ services:
       TZ: Asia/Tokyo
     ports:
       - "27018:27017"
-    command: mongod --smallfiles
+    #command: mongod --smallfiles
     volumes:
       - ./initdb-mongo-recommendation.d:/docker-entrypoint-initdb.d
 
   # $ mysql -uroot -h127.0.0.1 -p
   mysql:
     image: mysql:5.7.23
+    platform: linux/amd64
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
     ports:
       - "13306:3306"
@@ -93,6 +101,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.7.8-management
+    platform: linux/amd64
     ports:
       - 5672:5672
       - 15672:15672
